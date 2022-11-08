@@ -1,0 +1,206 @@
+##Tell me about yourself
+
+Good Evening Sir! Thanks for giving me the opputunity to introduce myself. My Name is Rishikesh, completed my B.Tech graduation from Anna university, Chennai. Currently I am working as a Linux System Administrator for Certiview IT and Management Solutions Pvt Ltd. I am having 2+ years of experience in administrating linux systems. My team consists of 20 members and we are able to manage more than 500 plus servers and regarding my roles and responsibilities, I am also responsible in automating certain activities using commands, shell scripting and ansible. I am responsible to work on projects, server builds, service requests and also well versed in RHEL 7 & 8. As  a administrator, I am responsible to look after all system performance related incidents. Also I am eager to learn certain new things, so I can adapt to any environment. That's all about me!!
+
+1.What are the different commands used in performance statistics?
+The System Performance statistics can be analysed by some important criteria. These are based on:
+a) CPU Performance
+b) Memory Performance
+c) I/O Performance
+d) Network Performance
+
+Some of the commands to check CPU Performance
+sar (system activity report), top, mpstat (multi-processor statistics), lscpu, uptime
+
+Some of the commands to check Memory Performance
+free -h, vmstat (virtual memory statistics), cat /proc/meminfo
+
+Some of the commands to check I/O Performance
+iostat (disk input/output statistics), tail /var/log/messages
+
+Some of the commands to check Network Performance
+netstat -i (network statistics), ethtool, nmcli (network manager command line interface), ip -s link
+
+2.How will you check a remote server a particular port is opened or not?
+
+Telnet command is having a special feature to check a remote servers particular port is opened or not.
+Syntax:
+Telnet ipaddress Portnumber
+
+3.Difference between tcp and udp?
+
+TCP
+TCP stands for Transmission Control Protocol
+1)Reliable Communication
+2)Connection Oriented
+3)Slow compared to UDP as they are acknowledging each time when the data packets are received
+
+UDP
+UDP stands for User DataGram Protocol
+1)Not a Reliable Communication
+2)Connection less
+3)Fast compared to TCP as they are not acknowledging.
+
+4.What are the port number for secure shell?
+
+Port Number for secure shell is 22/tcp
+
+5.What is dns?
+
+DNS stands for Domain Naming System or Domain Name Server
+Dns gives the name resolution for a server. The name server lookup from name to ipaddress is called forward lookup and ipaddress to name is called reverse lookup
+Port No: 53/udp
+Configuration file: /etc/named.conf
+To start a service,
+systemctl start named	
+
+6.How will you provide local name resolution?
+
+Providing the local name resolution is done by making entry in /etc/hosts configuration file.
+name to ipaddress or ipaddress to name 
+
+7.How wil you add kernel parameters to the systems?
+
+Adding kernel parameters to the system is done by making the entry in configuration file /etc/sysctl.conf
+For ex: kernel.hostname=myhost
+To make the entries effective use the command,
+sysctl -p
+
+8.How will you make sure service should not start at a boot time?
+
+By using the command,
+Systemctl mask servicename
+The service will not start at the boot time.	
+
+9.How will you monitor a server for network usage?
+
+Monitoring a server for network usage is done by using the command,
+
+Netstat -i
+ 
+This command shows the output with what are the network packets transferred or received [whereas TX-refers to transferred and RX-refers to received data packets]. If there is any packets drop means then that is also identified by issuing this command.
+
+10.How will you start a service?
+
+We can control a service by using systemctl command
+Starting a service is done by using the command,
+Systemctl start servicename
+
+11.What are the troubleshooting tips for system performance problem?
+
+System Performance Problem may arise due to
+*CPU Bound
+*Memory Bound 
+*I/O Bound
+*Network Bound
+To Troubleshoot these performance problems:
+
+In case of CPU Bound, I will try to check with the top, sar and lscpu command output to check for the CPU Utilisation and if there is any fluctuations means I will try to reduce the load average or I will increase the No.of CPU's for better performance.
+
+In case of Memory Bound, I will try to check with vmstat, free -h and cat /proc/meminfo command output to check for the Memory usage and in case of any fluctuations, I will try to reduce the swap space or I will try to clear the inactive memory which are not required .
+
+In case of I/O Bound, I will try to check with the iostat and iotop command output to check for the disk i/o and in case of any imbalancing I will try to place LV with stripping or clear the old disk by moving to other disk using pvmove command.
+
+In case of Network Bound, I will try to check with netstat -i, ethtool and nmcli command output to check for the network drops and usage and in case of any imbalancing I will try to balance the network usage so that the bandwidth is increased.
+  
+12.How will you address users security issues you have fixed?
+
+There are many security issues we need to check when a user is having issue in logging into the system.
+1)Chance of password expiry or change of password 
+2)Password got inactive or locked
+3)There might be change in the user's default shell to /usr/sbin/nologin
+4)If the username is entered in denyusers section in ssh configuration file /etc/ssh/sshd_config
+
+To fix these issues:
+1) change the password expiry to unlimited (chage -E -1 username)
+2) check the password status using passwd -S username and if it locked means unlock using passwd -u username
+3) change the shell to /bin/bash using chsh command
+4) Remove the entered username in denyusers section under the ssh configuration file and restart the ssh service using the command
+systemctl restart sshd
+
+13.Different activties done in ansible?
+
+Ansible is used to automate certain activities in linux. By using ansible 
+1)I have done updation using yum module 
+2)I have created/deleted user using user module
+3)I have started/stopped service using service module
+4)I have copied files using copy module
+5)I have checked if the file exists or not using stat module
+6)I have created/removed Vg using lvg module
+7)I have done all Logical volume related activities using lvol module
+8)I have done filesystem activities using filesystem module
+9)I have rebooted systems using reboot module
+10)I have created Virtual servers using vmware_guest module
+11)I have created/deleted file or directory using file module
+12)I have tested whether a web page is working or not using uri module
+13)I have processed a command and published the output in a file using command module
+14)I have fetched files from remote system using fetch module
+15)I have added particular port to firewall using firewalld module
+16)I have mounted the filesystem using mount module
+
+Refer to ansible-doc modulename and ansible galaxy (galaxy.ansible.com)
+
+
+14.How will you plan file system storage?
+
+I will ask the owner of the files to housekeep the filesystem storage so that if any inactive or old files are stored means it should be deleted or incase of additional storage is required, then I will increase the filesystem with getting proper permission. In case of no space in VG, I will ask the disk from storage team and i will create VG using vgcreate and create LV using lvextend command. To increase the filesystem use xfs_growfs command in case of xfs filesystem type and resize2fs command in case of ext filesystem.
+
+15.Why do you need to patch a system? 
+
+Reasons for patching,
+1) Fixes the security
+2) Improve the Stability
+3) Drivers are updated
+4) Functionality of the system is increased
+5) Increased Speed
+6)Fixes the software bugs, errors, known issues.
+
+16.How will you update a particular package?
+
+Updating a particular package is done by using the command,
+yum update packagename -y
+
+17.Got a ticket and you dont know how to fix the issue what are the steps you will take?
+
+In case of not knowing how to fix the issues, I follow escalation matrix which means, I call my SME(subject matter expert), if SME is not reachable, then I contact Team leader, if TL is not reachable, I call Manager and so on. I also send across the communication to via email, to SDMs(service delivery managers), TL, Manager, Team Distrubution List(team email also known as DL). I will update the ticket all the trasactions as per the process.
+
+18.What all activities you are aware in VMware?
+
+The activities which I have done/aware in VMware includes,
+* Power ON/OFF
+* Add/Remove Network adapters
+*Add/Remove new storage disks
+*Add/Remove CPU
+*Creating a new server using a template
+*Taking Snapshot before patching
+
+19.Port number for nfs and explain the importance and usage of nfs?
+
+Port Number for NFS is 2049/tcp
+NFS stands for network file system. It is mechanism of storing files on a network. NFS uses remote procedure call (rpc) that allows you to share filesystem and directories over a network from unix to unix. NFS supports 64-bit file sizes and we can able to share file size of more than 2GB. 
+configuration file: /etc/exports
+Use the command exportfs -vra to export the file to client
+ 
+20. how will you do a share from windows to unix?
+
+File sharing from windows to unix is done by samba share. The filesystem type which samba uses is Cifs which means common internet file system.
+Port No: 139/tcp
+Configuration file: /etc/samba/smb.conf
+Daemons: smb,nmb
+Make the necessary entries in that file (like workgroup,share name, valid users, browseable, writeable, max log size etc. ,)
+validate the parameters using testparm command.
+check whether you have disabled firewall and selinux and start the service using systemctl command. In client side, install cifs-utils and try to mount so that you will get access for that files.
+ 
+21. Do you have experience in creating a ticket with redhat?
+
+Yes, I am having experiencing in creating a case with redhat with the help of  redhat subscription and giving the sos report to them for further analysis.
+
+22. What is a sos report?
+
+The sos report generates a compressed tarball of  configuration details, system information and diagnostic information from a Red Hat Enterprise Linux system. For instance: the running kernel version, loaded modules, and system and service configuration files. The sosreport command also runs external programs to collect further information, and stores this output in the resulting archive.
+
+sos report is stored in /var/tmp.
+
+23. Are you able to work in automation and with different tools if there is no work in redhat?
+
+Yes, I am eager to learn certain new tools and I can able to work in automation.
